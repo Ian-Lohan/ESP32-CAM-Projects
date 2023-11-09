@@ -21,8 +21,6 @@
 #include "soc/rtc_cntl_reg.h"
 #include "Base64.h"
 #include "esp_camera.h"
-
-#include <PubSubClient.h>
 //======================================== 
 
 //======================================== CAMERA_MODEL_AI_THINKER GPIO.
@@ -49,16 +47,10 @@
 #define FLASH_LED_PIN 4
 
 //======================================== Enter your WiFi ssid and password.
-const char* ssid = "DTEL_DENILSON_2.4";
-const char* password = "wificasa251932";
-
-const char* mqtt_server = "fe52f116ecd14359b7c6e9a9fc1d0f00.s2.eu.hivemq.cloud";  // Replace with your HiveMQ server address
-const int mqtt_port = 8883;
-const char* mqtt_username = "ianlohan";
-const char* mqtt_password = "hivepass";
-
-WiFiClient espClient;
-PubSubClient client(espClient);
+//const char* ssid = "DTEL_DENILSON_2.4";
+//const char* password = "wificasa251932";
+const char* ssid = "Visitantes";
+const char* password = "Guest20.2";
 //======================================== 
 
 //======================================== Replace with your "Deployment ID" and Folder Name.
@@ -68,13 +60,13 @@ String myMainFolderName = "ESP32-CAM";
 
 //======================================== Variables for Timer/Millis.
 unsigned long previousMillis = 0; 
-const int Interval = 20000; //--> Capture and Send a photo every 20 seconds.
+const int Interval = 60000; //--> Capture and Send a photo every 60 seconds/1 minute.
 //======================================== 
 
 // Variable to set capture photo with LED Flash.
 // Set to "false", then the Flash LED will not light up when capturing a photo.
 // Set to "true", then the Flash LED lights up when capturing a photo.
-bool LED_Flash_ON = true;
+bool LED_Flash_ON = false;
 
 // Initialize WiFiClientSecure.
 WiFiClientSecure client;
@@ -377,13 +369,9 @@ void setup() {
   Test_Con();
 
   Serial.println();
-  Serial.println("ESP32-CAM captures and sends photos to the server every 20 seconds.");
+  Serial.println("ESP32-CAM captures and sends photos to the server every minutes.");
   Serial.println();
   delay(2000);
-
-  client.setServer(mqtt_server, mqtt_port);
-  client.setCallback(callback);
-  connectToMQTT();
 }
 //________________________________________________________________________________ 
 
@@ -391,7 +379,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  //---------------------------------------- Timer/Millis to capture and send photos to Google Drive every 20 seconds (see Interval variable).
+  //---------------------------------------- Timer/Millis to capture and send photos to Google Drive every 1 minute (see Interval variable).
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= Interval) {
     previousMillis = currentMillis;
@@ -399,27 +387,6 @@ void loop() {
     SendCapturedPhotos();
   }
   //---------------------------------------- 
-  client.loop()
-}
-
-void connectToMQTT() {
-  while (!client.connected()) {
-    Serial.println("Connecting to MQTT...");
-
-    if (client.connect("ESP32Client", mqtt_username, mqtt_password)) {
-      Serial.println("Connected to MQTT");
-      client.subscribe("camera_control");  // Subscribe to the topic for camera control
-    } else {
-      Serial.print("Failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" Retrying in 5 seconds...");
-      delay(5000);
-    }
-  }
-}
-
-void callback(char* topic, byte* message, unsigned int length) {
-  // Handle incoming MQTT messages...
 }
 //________________________________________________________________________________ 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
