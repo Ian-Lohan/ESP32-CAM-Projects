@@ -1,5 +1,5 @@
 function doPost(e) {
-  const name = Utilities.formatDate(new Date(), 'GMT-3', 'yyyyMMdd-HHmmss') + '.jpg'  // Change GMT+7 with GMT in your area.
+  const name = Utilities.formatDate(new Date(), 'GMT-3', 'yyyyMMdd-HHmmss') + '.jpg'  // Change GMT-3 with GMT in your area.
   const subFolderName = Utilities.formatDate(new Date(), 'GMT-3', 'yyyyMMdd')
   const folderName = e.parameters.folder || 'ESP32-CAM'
   const data = Utilities.base64Decode(e.postData.contents)
