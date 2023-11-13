@@ -17,7 +17,6 @@
 //======================================== Including the libraries.
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
-#include <PubSubClient.h>
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include "Base64.h"
@@ -48,23 +47,14 @@
 #define FLASH_LED_PIN 4
 
 //======================================== Enter your WiFi ssid and password.
-const char* ssid = ""; // Your Wi-Fi name
-const char* password = ""; // Your Wi-Fi password
+const char* ssid = "";
+const char* password = "";
 //======================================== 
 
 //======================================== Replace with your "Deployment ID" and Folder Name.
 String myDeploymentID = "";
-String myMainFolderName = "ESP32-CAM";
+String myMainFolderName = "";
 //======================================== 
-
-//======================================== MQTT Broker Settings
-const char* mqtt_server = "your_mqtt_broker_address";
-const int mqtt_port = 1883;
-const char* mqtt_username = "your_mqtt_username";
-const char* mqtt_password = "your_mqtt_password";
-
-const char* mqtt_topic_capture = "esp32cam/capture";
-//========================================
 
 //======================================== Variables for Timer/Millis.
 unsigned long previousMillis = 0; 
