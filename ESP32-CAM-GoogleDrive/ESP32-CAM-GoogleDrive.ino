@@ -48,14 +48,12 @@
 #define FLASH_LED_PIN 4
 
 //======================================== Enter your WiFi ssid and password.
-//const char* ssid = "DTEL_DENILSON_2.4";
-//const char* password = "wificasa251932";
-const char* ssid = "Visitantes";
-const char* password = "Guest20.2";
+const char* ssid = ""; // Your Wi-Fi name
+const char* password = ""; // Your Wi-Fi password
 //======================================== 
 
 //======================================== Replace with your "Deployment ID" and Folder Name.
-String myDeploymentID = "AKfycbxaaJEKLveJr1T4Fe5rj3vPx7cK5vYJpid-qPQjcClydkiya88WTHL3zZVvyec6Euqk1Q";
+String myDeploymentID = "";
 String myMainFolderName = "ESP32-CAM";
 //======================================== 
 
